@@ -22,12 +22,12 @@ public class ProfileFragment extends PostsFragment {
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> newPosts, ParseException e) {
+                swipeContainer.setRefreshing(false);
                 if (e != null) {
                     Log.e(TAG, "Issues with getting posts", e);
                     return;
                 }
-                allPosts.addAll(newPosts);
-                postsAdapter.notifyDataSetChanged();
+                postsAdapter.addAll(newPosts);
             }
         });
     }
