@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mdavison.parsetagram.Fragments.ComposeFragment;
 import com.mdavison.parsetagram.Fragments.PostsFragment;
+import com.mdavison.parsetagram.Fragments.ProfileFragment;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
 import com.parse.FindCallback;
@@ -65,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                     default:
-                        //TODO: Create profile fragment and update this
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
