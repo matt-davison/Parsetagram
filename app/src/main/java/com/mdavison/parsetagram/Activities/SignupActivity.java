@@ -16,6 +16,10 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+
+/**
+ * This Activity allows the user to create a new account
+ */
 public class SignupActivity extends AppCompatActivity {
 
     public static final String TAG = "SignupActivity";

@@ -14,6 +14,10 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+/**
+ * This is the launch activity, usually not seen by user unless they are not
+ * logged in
+ */
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
