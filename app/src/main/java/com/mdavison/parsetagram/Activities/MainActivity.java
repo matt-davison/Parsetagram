@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String description = etDescription.getText().toString();
                 if (description.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Description cannot be " +
-                            "empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Description cannot be "
+                            + "empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (photoFile == null || ivPostImage.getDrawable() == null) {
@@ -95,38 +95,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchCamera() {
-        // create Intent to take a picture and return control to the calling
-        // application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
         photoFile = getPhotoFileUri(photoFileName);
-
-
-        // getExternalFilesDir() + "/Pictures" should match the declaration
-        // in fileprovider.xml paths
-        //File file = new File(getExternalFilesDir(Environment
-        // .DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis()
-        // + ".png");
-
-        // wrap File object into a content provider. NOTE: authority here
-        // should match authority in manifest declaration
-        //Uri fileProvider = FileProvider.getUriForFile(MainActivity.this,
-        // "com.codepath.fileprovider", file);
-
-        // wrap File object into a content provider
-        // required for API >= 24
-        // See https://guides.codepath
-        // .com/android/Sharing-Content-with-Intents#sharing-files-with-api
-        // -24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(MainActivity.this, "com" +
-                ".codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(MainActivity.this, "com"
+                + ".codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
-        // If you call startActivityForResult() using an intent that no app
-        // can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getPackageManager()) != null) {
-            // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
