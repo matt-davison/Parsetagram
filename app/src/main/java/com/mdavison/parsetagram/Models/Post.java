@@ -5,9 +5,12 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 /**
  * This model represents a post and is compatible with the Parse database
  */
+//@Parcel
 @ParseClassName("Post")
 public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
@@ -15,6 +18,9 @@ public class Post extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_CREATED = "createdAt";
 
+    // empty contructor needed by Parceler library
+    public Post() {
+    }
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);

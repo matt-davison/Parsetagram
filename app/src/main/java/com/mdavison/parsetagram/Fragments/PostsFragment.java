@@ -1,10 +1,12 @@
 package com.mdavison.parsetagram.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -14,12 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mdavison.parsetagram.Activities.PostDetailsActivity;
 import com.mdavison.parsetagram.Adapters.PostsAdapter;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
+import com.mdavison.parsetagram.Support.ItemClickSupport;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +37,7 @@ public class PostsFragment extends Fragment {
     private RecyclerView rvPosts;
     private List<Post> allPosts;
     protected SwipeRefreshLayout swipeContainer;
+    private final FragmentManager fragmentManager = getFragmentManager();
 
     public PostsFragment() {
         // Required empty public constructor
@@ -65,6 +72,16 @@ public class PostsFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         queryPosts();
+        ItemClickSupport.addTo(rvPosts).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Intent i = new Intent(getContext(), PostDetailsActivity.class);
+                        i.putExtra("post", Parcels.wrap(allPosts.get(position)));
+                        startActivity(i);
+                    }
+                }
+        );
     }
 
     protected void queryPosts() {
