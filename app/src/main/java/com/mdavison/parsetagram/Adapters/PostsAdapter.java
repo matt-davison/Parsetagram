@@ -1,6 +1,7 @@
 package com.mdavison.parsetagram.Adapters;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
 import com.parse.ParseFile;
 
+import java.util.Date;
 import java.util.List;
 
 public class PostsAdapter
@@ -83,7 +85,12 @@ public class PostsAdapter
                 Glide.with(context).load(post.getImage().getUrl())
                         .into(ivImage);
             }
-
+            long now = new Date().getTime();
+            String relativeDate = DateUtils.getRelativeTimeSpanString(
+                    post.getCreatedAt().getTime(),
+                    now,
+                    DateUtils.SECOND_IN_MILLIS).toString();
+            tvDate.setText(relativeDate);
         }
     }
 }
