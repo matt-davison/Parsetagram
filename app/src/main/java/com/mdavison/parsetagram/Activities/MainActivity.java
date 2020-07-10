@@ -20,9 +20,8 @@ import com.mdavison.parsetagram.R;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
-    private BottomNavigationView bottomNavigationView;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
-
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

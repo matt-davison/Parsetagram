@@ -9,6 +9,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -46,6 +49,7 @@ public class ComposeFragment extends Fragment {
     private ImageView ivPostImage;
     private Button btnSubmit;
     private File photoFile;
+    private MenuItem miActionProgressItem;
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -54,6 +58,7 @@ public class ComposeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_compose, container, false);
     }
 
@@ -129,6 +134,7 @@ public class ComposeFragment extends Fragment {
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
         post.setUser(currentUser);
+        miActionProgressItem.setVisible(true);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -137,6 +143,7 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "Error while saving!",
                             Toast.LENGTH_SHORT).show();
                 }
+                miActionProgressItem.setVisible(false);
                 etDescription.setText("");
                 ivPostImage.setImageResource(0);
             }
@@ -156,5 +163,12 @@ public class ComposeFragment extends Fragment {
             Log.d(TAG, "failed to create directory");
         }
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_compose, menu);
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }
