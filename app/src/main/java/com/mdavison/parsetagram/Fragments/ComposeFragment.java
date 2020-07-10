@@ -5,12 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,18 +16,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.mdavison.parsetagram.Activities.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -57,12 +52,14 @@ public class ComposeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_compose, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         etDescription = view.findViewById(R.id.etDescription);
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
@@ -80,8 +77,9 @@ public class ComposeFragment extends Fragment {
             public void onClick(View view) {
                 String description = etDescription.getText().toString();
                 if (description.isEmpty()) {
-                    Toast.makeText(getContext(), "Description cannot be "
-                            + "empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),
+                            "Description cannot be " + "empty",
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (photoFile == null || ivPostImage.getDrawable() == null) {
@@ -116,8 +114,9 @@ public class ComposeFragment extends Fragment {
     private void launchCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com"
-                + ".codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider
+                .getUriForFile(getContext(), "com" + ".codepath.fileprovider",
+                        photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -151,9 +150,8 @@ public class ComposeFragment extends Fragment {
         // directories.
         // This way, we don't need to request external read/write runtime
         // permissions.
-        File mediaStorageDir =
-                new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                        TAG);
+        File mediaStorageDir = new File(getContext()
+                .getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(TAG, "failed to create directory");
         }

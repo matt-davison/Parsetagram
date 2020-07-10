@@ -1,11 +1,11 @@
 package com.mdavison.parsetagram.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.mdavison.parsetagram.Models.Post;
@@ -28,7 +28,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
-        post = (Post) Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
 
         tvUsername = findViewById(R.id.tvUsername);
         ivImage = findViewById(R.id.ivImage);
@@ -43,10 +43,9 @@ public class PostDetailsActivity extends AppCompatActivity {
             Glide.with(this).load(post.getImage().getUrl()).into(ivImage);
         }
         long now = new Date().getTime();
-        String relativeDate = DateUtils.getRelativeTimeSpanString(
-                post.getCreatedAt().getTime(),
-                now,
-                DateUtils.SECOND_IN_MILLIS).toString();
+        String relativeDate = DateUtils
+                .getRelativeTimeSpanString(post.getCreatedAt().getTime(), now,
+                        DateUtils.SECOND_IN_MILLIS).toString();
         tvDate.setText(relativeDate);
     }
 }

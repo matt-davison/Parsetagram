@@ -17,9 +17,13 @@ public class ParseApplication extends Application {
 
         ParseObject.registerSubclass(Post.class);
 
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("mdavison-parsetagram") // should correspond to APP_ID env variable
-                .clientKey(null)  // set explicitly unless clientKey is explicitly configured on Parse server
-                .server("https://mdavison-parsetagram.herokuapp.com/parse/").build());
+        Parse.initialize(new Parse.Configuration.Builder(this).applicationId(
+                "mdavison-parsetagram") // should correspond to APP_ID env
+                // variable
+                .clientKey(
+                        null)  // set explicitly unless clientKey is
+                // explicitly configured on Parse server
+                .server("https://mdavison-parsetagram.herokuapp.com/parse/")
+                .build());
     }
 }

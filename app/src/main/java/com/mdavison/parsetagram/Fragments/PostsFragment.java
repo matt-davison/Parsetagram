@@ -2,20 +2,17 @@ package com.mdavison.parsetagram.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mdavison.parsetagram.Activities.PostDetailsActivity;
 import com.mdavison.parsetagram.Adapters.PostsAdapter;
@@ -36,9 +33,9 @@ public class PostsFragment extends Fragment {
 
     public static final String TAG = "PostsFragment";
     protected PostsAdapter postsAdapter;
+    protected SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     private List<Post> allPosts;
-    protected SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
 
     public PostsFragment() {
@@ -60,17 +57,19 @@ public class PostsFragment extends Fragment {
         allPosts = new ArrayList<>();
         postsAdapter = new PostsAdapter(getContext(), allPosts);
         rvPosts.setAdapter(postsAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(getContext());
         rvPosts.setLayoutManager(linearLayoutManager);
         queryPosts();
 
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                postsAdapter.clear();
-                queryPosts();
-            }
-        });
+        swipeContainer.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        postsAdapter.clear();
+                        queryPosts();
+                    }
+                });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -80,20 +79,23 @@ public class PostsFragment extends Fragment {
         ItemClickSupport.addTo(rvPosts).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Intent i = new Intent(getContext(), PostDetailsActivity.class);
-                        i.putExtra("post", Parcels.wrap(allPosts.get(position)));
+                    public void onItemClicked(RecyclerView recyclerView,
+                                              int position, View v) {
+                        Intent i = new Intent(getContext(),
+                                PostDetailsActivity.class);
+                        i.putExtra("post",
+                                Parcels.wrap(allPosts.get(position)));
                         startActivity(i);
                     }
-                }
-        );
-        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount,
-                                   RecyclerView view) {
-                queryMorePosts(allPosts.size());
-            }
-        };
+                });
+        scrollListener =
+                new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount,
+                                           RecyclerView view) {
+                        queryMorePosts(allPosts.size());
+                    }
+                };
         rvPosts.addOnScrollListener(scrollListener);
     }
 

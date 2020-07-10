@@ -1,7 +1,5 @@
 package com.mdavison.parsetagram.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.mdavison.parsetagram.R;
 import com.parse.LogInCallback;
@@ -52,21 +52,24 @@ public class SignupActivity extends AppCompatActivity {
                         if (e == null) {
                             ParseUser.logInInBackground(username, password,
                                     new LogInCallback() {
-                                @Override
-                                public void done(ParseUser user,
-                                                 ParseException e) {
-                                    if (e != null) {
-                                        Log.e(TAG, "Issue with login", e);
-                                        return;
-                                    }
-                                    Intent i = new Intent(SignupActivity.this
-                                            , MainActivity.class);
-                                    startActivity(i);
-                                }
-                            });
+                                        @Override
+                                        public void done(ParseUser user,
+                                                         ParseException e) {
+                                            if (e != null) {
+                                                Log.e(TAG, "Issue with login",
+                                                        e);
+                                                return;
+                                            }
+                                            Intent i = new Intent(
+                                                    SignupActivity.this,
+                                                    MainActivity.class);
+                                            startActivity(i);
+                                        }
+                                    });
                         } else {
-                            Toast.makeText(SignupActivity.this, "Error while "
-                                    + "creating account!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignupActivity.this,
+                                    "Error while " + "creating account!",
+                                    Toast.LENGTH_LONG).show();
                             Log.e(TAG, "Error while creating account", e);
                         }
                     }

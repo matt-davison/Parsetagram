@@ -5,12 +5,9 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import org.parceler.Parcel;
-
 /**
  * This model represents a post and is compatible with the Parse database
  */
-//@Parcel
 @ParseClassName("Post")
 public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
@@ -18,7 +15,7 @@ public class Post extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_CREATED = "createdAt";
 
-    // empty contructor needed by Parceler library
+    // empty constructor needed by Parceler library
     public Post() {
     }
 
@@ -26,7 +23,6 @@ public class Post extends ParseObject {
         return getString(KEY_DESCRIPTION);
     }
 
-    //TODO: Figure out why this has to use put w/ final Strings
     public void setDescription(String description) {
         put(KEY_DESCRIPTION, description);
     }

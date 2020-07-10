@@ -1,8 +1,6 @@
 package com.mdavison.parsetagram.Adapters;
 
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,8 @@ import com.parse.ParseFile;
 
 import java.util.List;
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+public class PostsAdapter
+        extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     private Context context;
     private List<Post> posts;
@@ -33,7 +32,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                          int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_post, parent, false);
         return new ViewHolder(view);
     }
 
@@ -65,12 +65,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvUsername;
         private ImageView ivImage;
         private TextView tvDescription;
+        private TextView tvDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvDate = itemView.findViewById(R.id.tvDate);
         }
 
         public void bind(Post post) {
@@ -78,8 +80,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription.setText(post.getDescription());
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
+                Glide.with(context).load(post.getImage().getUrl())
+                        .into(ivImage);
             }
+
         }
     }
 }
