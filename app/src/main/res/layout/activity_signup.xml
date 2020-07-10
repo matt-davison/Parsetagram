@@ -38,5 +38,7 @@
         android:id="@+id/btnCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create" />
+        android:backgroundTint="@android:color/holo_green_light"
+        android:text="Create Account"
+        android:textColor="@android:color/white" />
 </LinearLayout>

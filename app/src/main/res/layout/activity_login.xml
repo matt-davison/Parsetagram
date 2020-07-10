@@ -9,6 +9,14 @@
     tools:context=".Activities.LoginActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="16dp"
+        app:srcCompat="@drawable/nav_logo_whiteout" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
@@ -30,11 +38,15 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="Log In"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/btnCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Account" />
+        android:backgroundTint="@android:color/holo_green_light"
+        android:text="Sign Up"
+        android:textColor="@android:color/white" />
 </LinearLayout>
