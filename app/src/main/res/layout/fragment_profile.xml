@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp" >
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -16,7 +15,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/instagram_user_outline_24" />
 
     <TextView
         android:id="@+id/tvUsername"
@@ -26,16 +25,15 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/ivProfile"
-        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="Username" />
 
-    <GridView
-        android:id="@+id/gvPosts"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ivProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

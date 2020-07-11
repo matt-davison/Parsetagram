@@ -1,47 +1,49 @@
 package com.mdavison.parsetagram.Fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.mdavison.parsetagram.Activities.PostDetailsActivity;
+import com.mdavison.parsetagram.Adapters.PostsAdapter;
+import com.mdavison.parsetagram.Adapters.ProfilePostsAdapter;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
+import com.mdavison.parsetagram.Support.ItemClickSupport;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
+
+import org.parceler.Parcels;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 public class ProfileFragment extends Fragment {
+
     public static final String TAG = "ProfileFragment";
+    //TODO: Remove and use compose's
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 7;
     public static final String photoFileName = "photo.jpg";
+
+    private ProfilePostsAdapter postsAdapter;
+    private RecyclerView rvPosts;
+    private List<Post> allPosts;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -50,7 +52,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -59,6 +60,26 @@ public class ProfileFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        rvPosts = view.findViewById(R.id.rvPosts);
+        allPosts = new ArrayList<>();
+        postsAdapter = new ProfilePostsAdapter(getContext(), allPosts);
+        rvPosts.setAdapter(postsAdapter);
+        GridLayoutManager layoutManager =
+                new GridLayoutManager(getContext(), 3);
+        rvPosts.setLayoutManager(layoutManager);
+        queryPosts();
+        ItemClickSupport.addTo(rvPosts).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView,
+                                              int position, View v) {
+                        Intent i = new Intent(getContext(),
+                                PostDetailsActivity.class);
+                        i.putExtra("post",
+                                Parcels.wrap(allPosts.get(position)));
+                        startActivity(i);
+                    }
+                });
     }
 
     /*
@@ -80,8 +101,26 @@ public class ProfileFragment extends Fragment {
         }
     }
 */
-    //TODO: Move to a static helper class
 
+    private void queryPosts() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED);
+        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> newPosts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issues with getting posts", e);
+                    return;
+                }
+                postsAdapter.addAll(newPosts);
+            }
+        });
+    }
+
+    //TODO: Move to a static helper class
     // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName) {
         // Get safe storage directory for photos

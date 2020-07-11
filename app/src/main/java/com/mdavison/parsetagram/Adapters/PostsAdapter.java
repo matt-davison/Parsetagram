@@ -22,8 +22,8 @@ import java.util.List;
 public class PostsAdapter
         extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    private final Context context;
-    private final List<Post> posts;
+    protected final Context context;
+    protected final List<Post> posts;
 
     public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
@@ -32,8 +32,8 @@ public class PostsAdapter
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                         int viewType) {
+    public PostsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                      int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_post, parent, false);
         return new ViewHolder(view);
@@ -50,13 +50,11 @@ public class PostsAdapter
         return posts.size();
     }
 
-    // Clean all elements of the recycler
     public void clear() {
         posts.clear();
         notifyDataSetChanged();
     }
 
-    // Add a list of items -- change to type used
     public void addAll(List<Post> list) {
         posts.addAll(list);
         notifyDataSetChanged();
@@ -68,6 +66,7 @@ public class PostsAdapter
         private ImageView ivImage;
         private TextView tvDescription;
         private TextView tvDate;
+        private ImageView ivProfile;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +74,7 @@ public class PostsAdapter
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvDate = itemView.findViewById(R.id.tvDate);
+            ivProfile = itemView.findViewById(R.id.ivProfile);
         }
 
         public void bind(Post post) {
@@ -85,11 +85,15 @@ public class PostsAdapter
                 Glide.with(context).load(post.getImage().getUrl())
                         .into(ivImage);
             }
+            ParseFile profileImage = (ParseFile) post.getUser().get("picture");
+            if (profileImage != null) {
+                Glide.with(context).load(post.getImage().getUrl())
+                        .into(ivProfile);
+            }
             long now = new Date().getTime();
-            String relativeDate = DateUtils.getRelativeTimeSpanString(
-                    post.getCreatedAt().getTime(),
-                    now,
-                    DateUtils.SECOND_IN_MILLIS).toString();
+            String relativeDate = DateUtils
+                    .getRelativeTimeSpanString(post.getCreatedAt().getTime(),
+                            now, DateUtils.SECOND_IN_MILLIS).toString();
             tvDate.setText(relativeDate);
         }
     }
