@@ -27,6 +27,7 @@ import com.mdavison.parsetagram.Activities.PostDetailsActivity;
 import com.mdavison.parsetagram.Adapters.ProfilePostsAdapter;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
+import com.mdavison.parsetagram.Support.Extras;
 import com.mdavison.parsetagram.Support.ItemClickSupport;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -43,10 +44,13 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * This Fragment implements the user profile story, allowing the user to view
+ * their own posts and change their profile picture
+ */
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
-    //TODO: Remove and use compose's
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 7;
     public static final String photoFileName = "photo.jpg";
 
@@ -82,8 +86,8 @@ public class ProfileFragment extends Fragment {
 
         // Sahil: Is this different enough of a behavior to warrant having
         // its own Activity?
-        ParseUser selectedUser = Parcels.unwrap(
-                getActivity().getIntent().getParcelableExtra("user"));
+        ParseUser selectedUser = Parcels.unwrap(getActivity().getIntent()
+                .getParcelableExtra(Extras.EXTRA_USER));
         if (selectedUser == null) {
             ivProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,7 +120,7 @@ public class ProfileFragment extends Fragment {
                                               int position, View v) {
                         Intent i = new Intent(getContext(),
                                 PostDetailsActivity.class);
-                        i.putExtra("post",
+                        i.putExtra(Extras.EXTRA_POST,
                                 Parcels.wrap(allPosts.get(position)));
                         startActivity(i);
                     }

@@ -19,6 +19,7 @@ import com.mdavison.parsetagram.Adapters.PostsAdapter;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
 import com.mdavison.parsetagram.Support.EndlessRecyclerViewScrollListener;
+import com.mdavison.parsetagram.Support.Extras;
 import com.mdavison.parsetagram.Support.ItemClickSupport;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -29,6 +30,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Fragment implements the home feed story
+ */
 public class PostsFragment extends Fragment {
 
     public static final String TAG = "PostsFragment";
@@ -83,7 +87,7 @@ public class PostsFragment extends Fragment {
                                               int position, View v) {
                         Intent i = new Intent(getContext(),
                                 PostDetailsActivity.class);
-                        i.putExtra("post",
+                        i.putExtra(Extras.EXTRA_POST,
                                 Parcels.wrap(allPosts.get(position)));
                         startActivity(i);
                     }

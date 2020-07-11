@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.mdavison.parsetagram.Models.Like;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
+import com.mdavison.parsetagram.Support.Extras;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -31,6 +29,9 @@ import org.parceler.Parcels;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This Activity shows a post's details
+ */
 public class PostDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = "PostDetailsActivity";
@@ -44,11 +45,13 @@ public class PostDetailsActivity extends AppCompatActivity {
     private RecyclerView tvComments;
     private EditText etComment;
     private ImageView ivComment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
-        final Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        final Post post = Parcels.unwrap(
+                getIntent().getParcelableExtra(Extras.EXTRA_POST));
         final ParseUser user = post.getUser();
         tvUsername = findViewById(R.id.tvUsername);
         ivImage = findViewById(R.id.ivImage);
@@ -65,9 +68,9 @@ public class PostDetailsActivity extends AppCompatActivity {
         llProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PostDetailsActivity.this, ProfileDetailsActivity.class);
-                i.putExtra("user",
-                        Parcels.wrap(user));
+                Intent i = new Intent(PostDetailsActivity.this,
+                        ProfileDetailsActivity.class);
+                i.putExtra(Extras.EXTRA_USER, Parcels.wrap(user));
                 startActivity(i);
             }
         });
@@ -77,8 +80,7 @@ public class PostDetailsActivity extends AppCompatActivity {
 
         ParseFile profileImage = (ParseFile) user.get("picture");
         if (profileImage != null) {
-            Glide.with(this).load(profileImage.getUrl())
-                    .into(ivProfile);
+            Glide.with(this).load(profileImage.getUrl()).into(ivProfile);
         }
         ParseFile image = post.getImage();
         if (image != null) {
@@ -127,7 +129,8 @@ public class PostDetailsActivity extends AppCompatActivity {
                             return;
                         }
                         if (likes.size() == 0) {
-                            ivLike.setImageResource(R.drawable.ufi_heart_active);
+                            ivLike.setImageResource(
+                                    R.drawable.ufi_heart_active);
                         } else {
                             ivLike.setImageResource(R.drawable.ufi_heart);
                             likes.get(0).deleteInBackground();
@@ -140,7 +143,6 @@ public class PostDetailsActivity extends AppCompatActivity {
                 like.setPost(post);
                 like.setOwner(ParseUser.getCurrentUser());
                 like.saveInBackground();
-
             }
         });
 
@@ -150,12 +152,5 @@ public class PostDetailsActivity extends AppCompatActivity {
 
             }
         });
-        /*
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.setLimit(20);
-        query.addDescendingOrder(Post.KEY_CREATED);
-        query.whereEqualTo(Post.KEY_USER, currentUser);
-         */
     }
 }

@@ -19,6 +19,9 @@ import com.parse.ParseFile;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This adapter adapts Posts to a RecyclerView
+ */
 public class PostsAdapter
         extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
@@ -82,13 +85,11 @@ public class PostsAdapter
             tvDescription.setText(post.getDescription());
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(image.getUrl())
-                        .into(ivImage);
+                Glide.with(context).load(image.getUrl()).into(ivImage);
             }
             ParseFile profileImage = (ParseFile) post.getUser().get("picture");
             if (profileImage != null) {
-                Glide.with(context).load(profileImage.getUrl())
-                        .into(ivProfile);
+                Glide.with(context).load(profileImage.getUrl()).into(ivProfile);
             }
             long now = new Date().getTime();
             String relativeDate = DateUtils

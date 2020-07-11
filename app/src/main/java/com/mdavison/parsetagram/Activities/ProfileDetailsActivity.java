@@ -1,20 +1,20 @@
 package com.mdavison.parsetagram.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mdavison.parsetagram.Fragments.ComposeFragment;
-import com.mdavison.parsetagram.Fragments.PostsFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
 import com.mdavison.parsetagram.Fragments.ProfileFragment;
 import com.mdavison.parsetagram.R;
 
+/**
+ * This activity hosts a fragment showing a profile's details
+ */
 public class ProfileDetailsActivity extends AppCompatActivity {
     public static final String TAG = "ProfileDetailsActivity";
     private final FragmentManager fragmentManager = getSupportFragmentManager();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

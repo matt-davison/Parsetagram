@@ -9,6 +9,9 @@ import com.mdavison.parsetagram.Models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+/**
+ * Registers custom ParseObjects
+ */
 public class ParseApplication extends Application {
 
     public static final String CLIENT_KEY = BuildConfig.CLIENT_KEY;
@@ -23,8 +26,7 @@ public class ParseApplication extends Application {
         Parse.initialize(new Parse.Configuration.Builder(this).applicationId(
                 "mdavison-parsetagram") // should correspond to APP_ID env
                 // variable
-                .clientKey(
-                        null)  // set explicitly unless clientKey is
+                .clientKey(null)  // set explicitly unless clientKey is
                 // explicitly configured on Parse server
                 .server("https://mdavison-parsetagram.herokuapp.com/parse/")
                 .build());

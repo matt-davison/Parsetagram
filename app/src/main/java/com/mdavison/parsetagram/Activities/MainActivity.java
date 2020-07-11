@@ -1,6 +1,5 @@
 package com.mdavison.parsetagram.Activities;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
 

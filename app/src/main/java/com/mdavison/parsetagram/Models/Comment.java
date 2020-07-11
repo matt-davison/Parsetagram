@@ -4,6 +4,9 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+/**
+ * Represents a comment
+ */
 @ParseClassName("Comment")
 public class Comment extends ParseObject {
 
@@ -11,7 +14,7 @@ public class Comment extends ParseObject {
         put("owner", user);
     }
 
-    public ParseUser getOwner()  {
+    public ParseUser getOwner() {
         return getParseUser("owner");
     }
 
@@ -19,7 +22,7 @@ public class Comment extends ParseObject {
         put("post", post);
     }
 
-    public Post getPost()  {
+    public Post getPost() {
         return (Post) getParseObject("post");
     }
 }

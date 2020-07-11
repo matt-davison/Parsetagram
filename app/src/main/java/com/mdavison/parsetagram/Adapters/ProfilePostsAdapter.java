@@ -16,6 +16,9 @@ import com.parse.ParseFile;
 
 import java.util.List;
 
+/**
+ * This adapter adapts Profile pictures to a RecyclerView
+ */
 public class ProfilePostsAdapter
         extends RecyclerView.Adapter<ProfilePostsAdapter.ViewHolder> {
 
@@ -64,8 +67,7 @@ public class ProfilePostsAdapter
         public void bind(Post post) {
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(image.getUrl())
-                        .into(ivImage);
+                Glide.with(context).load(image.getUrl()).into(ivImage);
             }
         }
     }
