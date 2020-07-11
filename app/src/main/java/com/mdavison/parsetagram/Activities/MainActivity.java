@@ -1,5 +1,6 @@
 package com.mdavison.parsetagram.Activities;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         bottomNavigationView.setSelectedItemId(R.id.action_home);
-
+        bottomNavigationView.setItemIconTintList(null);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.nav_logo_whiteout);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 }
