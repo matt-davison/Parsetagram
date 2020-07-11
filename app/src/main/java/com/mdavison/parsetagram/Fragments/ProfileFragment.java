@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment {
 
         // Sahil: Is this different enough of a behavior to warrant having
         // its own Activity?
+        /*
         ParseUser selectedUser = Parcels.unwrap(
                 getActivity().getIntent().getParcelableExtra("user"));
         if (selectedUser == null) {
@@ -89,8 +90,14 @@ public class ProfileFragment extends Fragment {
         } else {
             currentUser = selectedUser;
         }
+        */
         // end questionable decision
-
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCamera();
+            }
+        });
         rvPosts = view.findViewById(R.id.rvPosts);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
@@ -121,26 +128,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
-
-    /*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                Bitmap takenImage =
-                        BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                ivPostImage.setImageBitmap(takenImage);
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-*/
 
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
