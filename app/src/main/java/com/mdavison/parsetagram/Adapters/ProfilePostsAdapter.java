@@ -64,7 +64,7 @@ public class ProfilePostsAdapter
         public void bind(Post post) {
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(post.getImage().getUrl())
+                Glide.with(context).load(image.getUrl())
                         .into(ivImage);
             }
         }
