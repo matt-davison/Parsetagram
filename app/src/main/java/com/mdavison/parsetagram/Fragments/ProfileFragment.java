@@ -75,9 +75,13 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         currentUser = ParseUser.getCurrentUser();
 
+
+        rvPosts = view.findViewById(R.id.rvPosts);
+        ivProfile = view.findViewById(R.id.ivProfile);
+        tvUsername = view.findViewById(R.id.tvUsername);
+
         // Sahil: Is this different enough of a behavior to warrant having
         // its own Activity?
-        /*
         ParseUser selectedUser = Parcels.unwrap(
                 getActivity().getIntent().getParcelableExtra("user"));
         if (selectedUser == null) {
@@ -90,17 +94,7 @@ public class ProfileFragment extends Fragment {
         } else {
             currentUser = selectedUser;
         }
-        */
         // end questionable decision
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchCamera();
-            }
-        });
-        rvPosts = view.findViewById(R.id.rvPosts);
-        ivProfile = view.findViewById(R.id.ivProfile);
-        tvUsername = view.findViewById(R.id.tvUsername);
 
         ParseFile profileImage = (ParseFile) currentUser.get("picture");
         if (profileImage != null) {

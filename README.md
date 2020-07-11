@@ -47,7 +47,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 Here's a walkthrough of implemented user stories:
 
 ![Video Walkthrough](https://github.com/matt-davison/Parsetagram/blob/master/Kapture.gif)
-
+![Video Walthrough 2](https://github.com/matt-davison/Parsetagram/blob/master/Kapture-2.gif)
 GIF created with [Kap](https://getkap.co/).
 
 ## Credits
