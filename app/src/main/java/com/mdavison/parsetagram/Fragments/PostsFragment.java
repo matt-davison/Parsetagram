@@ -99,7 +99,7 @@ public class PostsFragment extends Fragment {
         rvPosts.addOnScrollListener(scrollListener);
     }
 
-    protected void queryPosts() {
+    private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setLimit(20);
@@ -117,7 +117,7 @@ public class PostsFragment extends Fragment {
         });
     }
 
-    protected void queryMorePosts(int offset) {
+    private void queryMorePosts(int offset) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setSkip(offset);

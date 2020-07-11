@@ -167,7 +167,7 @@ public class ComposeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_compose, menu);
+        inflater.inflate(R.menu.menu_fragment_compose, menu);
         miActionProgressItem = menu.findItem(R.id.miActionProgress);
         super.onCreateOptionsMenu(menu, inflater);
     }

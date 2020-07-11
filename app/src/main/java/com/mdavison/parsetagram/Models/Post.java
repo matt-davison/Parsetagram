@@ -14,6 +14,8 @@ public class Post extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_CREATED = "createdAt";
+    public static final String KEY_COMMENTS = "comments";
+    public static final String KEY_LIKES = "likes";
 
     // empty constructor needed by Parceler library
     public Post() {
