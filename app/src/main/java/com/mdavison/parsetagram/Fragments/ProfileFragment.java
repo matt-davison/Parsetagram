@@ -20,13 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.mdavison.parsetagram.Activities.PostDetailsActivity;
-import com.mdavison.parsetagram.Adapters.PostsAdapter;
 import com.mdavison.parsetagram.Adapters.ProfilePostsAdapter;
 import com.mdavison.parsetagram.Models.Post;
 import com.mdavison.parsetagram.R;
@@ -61,6 +58,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUsername;
     private ImageView ivProfile;
     private ParseUser currentUser;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -76,15 +74,27 @@ public class ProfileFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         currentUser = ParseUser.getCurrentUser();
+
+        // Sahil: Is this different enough of a behavior to warrant having
+        // its own Activity?
+        ParseUser selectedUser = Parcels.unwrap(
+                getActivity().getIntent().getParcelableExtra("user"));
+        if (selectedUser == null) {
+            ivProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchCamera();
+                }
+            });
+        } else {
+            currentUser = selectedUser;
+        }
+        // end questionable decision
+
         rvPosts = view.findViewById(R.id.rvPosts);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchCamera();
-            }
-        });
+
         ParseFile profileImage = (ParseFile) currentUser.get("picture");
         if (profileImage != null) {
             Glide.with(getContext()).load(profileImage.getUrl())
@@ -170,7 +180,9 @@ public class ProfileFragment extends Fragment {
                             Toast.makeText(getContext(), "Error while saving!",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getContext(), "Profile Picture Updated!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),
+                                    "Profile Picture Updated!",
+                                    Toast.LENGTH_SHORT).show();
                         }
 
                     }
