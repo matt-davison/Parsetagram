@@ -95,7 +95,6 @@ public class PostDetailsActivity extends AppCompatActivity {
 
         ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
         query.include(Like.KEY_USER);
-        query.whereEqualTo(Like.KEY_USER, ParseUser.getCurrentUser());
         query.whereEqualTo(Like.KEY_POST, post);
         query.findInBackground(new FindCallback<Like>() {
             @Override
@@ -104,11 +103,12 @@ public class PostDetailsActivity extends AppCompatActivity {
                     Log.e(TAG, "Issues with getting posts", e);
                     return;
                 }
-                if (likes.size() == 0) {
-                    ivLike.setImageResource(R.drawable.ufi_heart_active);
-                } else {
-                    ivLike.setImageResource(R.drawable.ufi_heart);
-                    likes.get(0).deleteInBackground();
+                for (Like like : likes) {
+                    if (like.getOwner().getUsername()
+                            .equals(ParseUser.getCurrentUser().getUsername())) {
+                        ivLike.setImageResource(R.drawable.ufi_heart_active);
+                        break;
+                    }
                 }
                 tvLikes.setText(Integer.toString(likes.size()));
             }
@@ -131,18 +131,21 @@ public class PostDetailsActivity extends AppCompatActivity {
                         if (likes.size() == 0) {
                             ivLike.setImageResource(
                                     R.drawable.ufi_heart_active);
+                            Like like = new Like();
+                            like.setPost(post);
+                            like.setOwner(ParseUser.getCurrentUser());
+                            like.saveInBackground();
+                            tvLikes.setText(Integer.toString(Integer.valueOf(
+                                    tvLikes.getText().toString()) + 1));
                         } else {
                             ivLike.setImageResource(R.drawable.ufi_heart);
                             likes.get(0).deleteInBackground();
+                            tvLikes.setText(Integer.toString(Integer.valueOf(
+                                    tvLikes.getText().toString()) - 1));
                         }
-                        tvLikes.setText(Integer.toString(likes.size()));
+
                     }
                 });
-
-                Like like = new Like();
-                like.setPost(post);
-                like.setOwner(ParseUser.getCurrentUser());
-                like.saveInBackground();
             }
         });
 
