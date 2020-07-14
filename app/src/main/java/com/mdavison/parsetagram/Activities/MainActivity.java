@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.mdavison.parsetagram.Fragments.ComposeFragment;
 import com.mdavison.parsetagram.Fragments.PostsFragment;
 import com.mdavison.parsetagram.Fragments.ProfileFragment;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 });
         bottomNavigationView.setSelectedItemId(R.id.action_home);
         bottomNavigationView.setItemIconTintList(null);
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.nav_logo_whiteout);
         getSupportActionBar().setDisplayUseLogoEnabled(true);

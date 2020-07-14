@@ -129,6 +129,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                             return;
                         }
                         if (likes.size() == 0) {
+                            //ivLike.setColorFilter(R.)
                             ivLike.setImageResource(
                                     R.drawable.ufi_heart_active);
                             Like like = new Like();
